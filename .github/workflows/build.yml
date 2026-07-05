@@ -1,0 +1,40 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: 'Target URL'
+        required: true
+        default: 'about:blank'
+      app_name:
+        description: 'App Name'
+        required: true
+        default: 'Barbos Loader'
+      package_name:
+        description: 'Package Name'
+        required: true
+        default: 'com.barbos.loader'
+      version_name:
+        description: 'Version Name'
+        required: true
+        default: '1.0.0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build APK
+        run: |
+          echo "Building APK..."
+          echo "Target URL: ${{ github.event.inputs.target_url }}"
+          echo "App Name: ${{ github.event.inputs.app_name }}"
